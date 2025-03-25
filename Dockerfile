@@ -7,9 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package.json package-lock.json /app/
 
+USER root
 # Install dependencies
 RUN npm install
 
+USER node
 # Copy the entire codebase to the working directory
 COPY . /app/
 
