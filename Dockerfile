@@ -1,5 +1,5 @@
 # Use Node.js Alpine base image
-FROM node:alpine as build
+FROM chainguard/node AS build
 
 # Create and set the working directory inside the container
 WORKDIR /app
@@ -21,7 +21,7 @@ CMD ["npm", "run", "build"]
 
 # Stage 2: Production Build
 
-FROM nginx:alpine 
+FROM chainguard/nginx:latest AS production
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD [ "nginx", "-g", "daemon off;" ]
