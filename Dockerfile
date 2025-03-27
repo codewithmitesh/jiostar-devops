@@ -1,54 +1,24 @@
-# # Use Node.js Alpine base image
-# FROM node:alpine AS build
-
-# # Create and set the working directory inside the container
-# WORKDIR /app
-
-# # Copy package.json and package-lock.json to the working directory
-# COPY package.json package-lock.json /app/
-# USER root
-
-# # Install dependencies
-# RUN npm install
-# USER node
-
-# # Copy the entire codebase to the working directory
-# COPY . /app/
-
-# # Expose the port your app runs on (replace <PORT_NUMBER> with your app's actual port)
-# EXPOSE 3000
-
-# # Define the command to start your application (replace "start" with the actual command to start your app)
-# CMD ["npm", "run", "build"]
-
-# # # Stage 2: Production Build
-# # FROM chainguard/nginx:latest-dev AS production
-
-# # # Copy built files
-# # COPY --from=build /app/build /var/lib/nginx/html
-
-# # # Expose port 80
-# # EXPOSE 80
-
-# # # Run Nginx with the correct binary
-# # CMD ["/usr/nginx", "-c", "/etc/nginx/nginx.conf"]
-# FROM nginx:latest AS production
-# COPY --from=build /app/build /usr/share/nginx/html
-# EXPOSE 80
-# CMD [ "nginx", "-g", "daemon off;" ]
-
-# Build stage
+# Use Debian-based Node.js image
 FROM node:latest AS build
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
+COPY package.json package-lock.json ./
+RUN apt-get update && apt-get install -y --only-upgrade libxslt1.1  # 🔹 Upgrade libxslt1.1
+RUN npm install
+COPY . ./
 RUN npm run build
 
-# Production stage
-FROM nginx:latest
+# Use Debian-based Nginx image
+FROM nginx:latest AS production
+
+# Upgrade libxslt1.1 in the production image too
+RUN apt-get update && apt-get install -y --only-upgrade libxslt1.1  
+
+# Copy built files
 COPY --from=build /app/build /usr/share/nginx/html
-# Add nginx configuration if needed
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
 EXPOSE 80
+
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
