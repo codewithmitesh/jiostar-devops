@@ -6,12 +6,12 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
 COPY package.json package-lock.json /app/
-
 USER root
+
 # Install dependencies
 RUN npm install
-
 USER node
+
 # Copy the entire codebase to the working directory
 COPY . /app/
 
@@ -22,7 +22,6 @@ EXPOSE 3000
 CMD ["npm", "run", "build"]
 
 # Stage 2: Production Build
-
 FROM chainguard/nginx:latest AS production
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80

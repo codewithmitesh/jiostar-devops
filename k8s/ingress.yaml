@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jiostar
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # Add additional annotations as needed for your specific ingress controller
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: jiostar.example.com  # Replace with your actual domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jiostar-service
+            port:
+              number: 80
+  # Uncomment and configure if you want TLS
+  # tls:
+  # - hosts:
+  #   - jiostar.example.com
+  #   secretName: jiostar-tls
