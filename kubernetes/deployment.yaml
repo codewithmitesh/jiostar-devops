@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: jioStat
-        image: ghcr.io/codewithmitesh/jiostar:sha-fb64dc2ac8cd8d79ad4a75c58326596b59eaf402
+        image: ghcr.io/codewithmitesh/jiostar-devops:sha-7a6c7cc89a057fa9612a1c7fb05d3201203ee3ba
         # Image will be automatically updated by CI/CD pipeline
         imagePullPolicy: Always
         ports:
