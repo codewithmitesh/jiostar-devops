@@ -38,7 +38,7 @@
 # CMD [ "nginx", "-g", "daemon off;" ]
 
 # Build stage
-FROM node:alpine AS build
+FROM node:latest AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -46,7 +46,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:latest
 COPY --from=build /app/build /usr/share/nginx/html
 # Add nginx configuration if needed
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
