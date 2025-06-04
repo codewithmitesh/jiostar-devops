@@ -1,4 +1,4 @@
-const APIKEY="87325653db2146984014cf0f9c17b326";
+const APIKEY=process.env.MOVIEDB_APIKEY;
 
 const requests = {
     fetchTrending:`/trending/all/week?api_key=${APIKEY}&language=en-US`,

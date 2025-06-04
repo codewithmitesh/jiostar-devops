@@ -40,5 +40,11 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+        env:
+        - name: MOVIEDB_APIKEY
+          valueFrom:
+            secretKeyRef:
+              name: moviedb-apikey
+              key: MOVIEDB_APIKEY
       imagePullSecrets:
       - name: github-container-registry
