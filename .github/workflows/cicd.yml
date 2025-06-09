@@ -151,6 +151,17 @@ jobs:
       - name: Set image tag output
         id: set_output
         run: echo "image_tag=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+        
+      - name: KubeLinter - Scan Kubernetes YAML files
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: ./kubernetes
+
+      - name: Checkov - Static analysis for Kubernetes YAML
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: ./kubernetes
+          framework: kubernetes
 
   update-k8s:
     name: Update Kubernetes Deployment
