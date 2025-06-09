@@ -3,7 +3,9 @@ FROM node:latest AS build
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN apt-get update && apt-get install -y --only-upgrade libxslt1.1  # 🔹 Upgrade libxslt1.1
+#RUN apt-get update && apt-get install -y --only-upgrade libxslt1.1  # 🔹 Upgrade libxslt1.1
+RUN apt-get update && apt-get upgrade -y && apt-get clean
+
 RUN npm install
 COPY . ./
 RUN npm run build
