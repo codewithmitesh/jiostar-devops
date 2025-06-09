@@ -52,11 +52,10 @@ jobs:
           exit-code: 1 # fail on critical/high vulns
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectKey: codewithmitesh
-          organization: codewithmitesh
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
           token: ${{ secrets.SONAR_TOKEN }}
+
 
       - name: Install dependencies
         run: npm install
