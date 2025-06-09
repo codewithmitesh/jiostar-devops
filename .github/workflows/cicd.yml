@@ -41,7 +41,21 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      
+
+      - name: Trivy SCA scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: table
+          severity: CRITICAL
+          exit-code: 1 # fail on critical/high vulns
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: Install dependencies
         run: npm install
       
@@ -111,7 +125,21 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-      
+
+      - name: Generate SBOM for image (CycloneDX)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          format: cyclonedx
+          output: sbom.cyclonedx.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-cyclonedx
+          path: sbom.cyclonedx.json
+
       - name: Push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -123,6 +151,11 @@ jobs:
       - name: Set image tag output
         id: set_output
         run: echo "image_tag=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+        
+      - name: KubeLinter - Scan Kubernetes YAML files
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: ./kubernetes
 
   update-k8s:
     name: Update Kubernetes Deployment

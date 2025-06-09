@@ -14,8 +14,18 @@ spec:
       labels:
         app: jiostar
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - jiostar
+              topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: jioStat
+      - name: jioStar
         image: ghcr.io/codewithmitesh/jiostar-devops:sha-f5cd8287c3252ccbf4f5f5e26e0c17728ba18a40
         # Image will be automatically updated by CI/CD pipeline
         imagePullPolicy: Always
@@ -46,5 +56,9 @@ spec:
             secretKeyRef:
               name: moviedb-apikey
               key: MOVIEDB_APIKEY
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
       imagePullSecrets:
       - name: github-container-registry
