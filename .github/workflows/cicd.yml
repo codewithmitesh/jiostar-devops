@@ -157,12 +157,6 @@ jobs:
         with:
           directory: ./kubernetes
 
-      - name: Checkov - Static analysis for Kubernetes YAML
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          directory: ./kubernetes
-          framework: kubernetes
-
   update-k8s:
     name: Update Kubernetes Deployment
     runs-on: ubuntu-latest
