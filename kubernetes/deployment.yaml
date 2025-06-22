@@ -58,7 +58,7 @@ spec:
         - name: tmp
           mountPath: /var/lib/nginx/tmp/
         env:
-        - name: MOVIEDB_APIKEY
+        - name: REACT_APP_MOVIEDB_APIKEY
           valueFrom:
             secretKeyRef:
               name: moviedb-apikey
