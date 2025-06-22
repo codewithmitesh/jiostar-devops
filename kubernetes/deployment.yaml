@@ -52,6 +52,9 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+        volumeMounts:
+          - mountPath: /tmp/nginx
+            name: temp-vol
         env:
         - name: MOVIEDB_APIKEY
           valueFrom:
@@ -64,3 +67,6 @@ spec:
           readOnlyRootFilesystem: true
       imagePullSecrets:
       - name: github-container-registry
+      volumes:
+        - name: temp-vol
+          emptyDir: {}
