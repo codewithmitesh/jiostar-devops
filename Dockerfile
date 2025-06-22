@@ -7,6 +7,10 @@ COPY --chown=node:node package.json package-lock.json ./
 RUN npm install
 
 COPY --chown=node:node . ./
+
+ARG REACT_APP_MOVIEDB_APIKEY
+ENV REACT_APP_MOVIEDB_APIKEY=$REACT_APP_MOVIEDB_APIKEY
+
 RUN npm run build
 
 # Use Debian-based Nginx image
