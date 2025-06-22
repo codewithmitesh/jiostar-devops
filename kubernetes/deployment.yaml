@@ -16,14 +16,16 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - jiostar
-              topologyKey: "kubernetes.io/hostname"
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - jiostar
+                topologyKey: "kubernetes.io/hostname"
       containers:
       - name: jiostar
         image: ghcr.io/codewithmitesh/jiostar-devops:sha-389530cd4a1cfba26f45cf4ff9c5b751b5fbe644
