@@ -28,7 +28,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
       - name: jiostar
-        image: ghcr.io/codewithmitesh/jiostar-devops:sha-4bdb7a1dbb4f236a0ce884a7331085a73976cc6f
+        image: ghcr.io/codewithmitesh/jiostar-devops:sha-1a7bc73b4c28c458afc8c278711bbd7dc1fb495d
         # Image will be automatically updated by CI/CD pipeline
         imagePullPolicy: Always
         ports:
