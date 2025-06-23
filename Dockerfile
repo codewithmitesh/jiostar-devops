@@ -1,4 +1,3 @@
-# Use Debian-based Node.js image
 FROM cgr.dev/chainguard/node AS build
 
 WORKDIR /app
@@ -8,8 +7,6 @@ RUN npm install
 
 COPY --chown=node:node . ./
 
-ARG REACT_APP_MOVIEDB_APIKEY
-ENV REACT_APP_MOVIEDB_APIKEY=$REACT_APP_MOVIEDB_APIKEY
 
 RUN npm run build
 
