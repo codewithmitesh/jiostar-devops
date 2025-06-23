@@ -1,11 +1,12 @@
 
 # 🎬 JioStar - DevSecOps 
 
-> 📹 [Add Demo Video Link Here]()  
+## 📽️ Demo Video
 
+[![Watch the demo](./demothumbnail.png)](https://vimeo.com/1095701923/f73a51dff0)
+---
 ![CI/CD Flowchart](./diagram.png)
 A modern, secure, and scalable movie browsing web application powered by **React**, running in a **Kubernetes** environment with full **CI/CD** and **DevSecOps** integration.
-
 ---
 
 ## 🚀 Features
