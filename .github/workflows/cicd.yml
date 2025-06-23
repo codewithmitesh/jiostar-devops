@@ -115,8 +115,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           load: true
-          build-args: |
-            REACT_APP_MOVIEDB_APIKEY=${{ secrets.REACT_APP_MOVIEDB_APIKEY }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
